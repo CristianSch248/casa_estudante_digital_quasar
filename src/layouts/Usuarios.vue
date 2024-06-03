@@ -19,7 +19,7 @@
               v-model="usuario.senha"
               label="Senha"
               type="password"
-              filled
+              filledJ
               disable="false"
             />
             <q-btn

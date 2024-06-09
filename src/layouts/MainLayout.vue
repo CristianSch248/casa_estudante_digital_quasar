@@ -20,7 +20,11 @@
         </div>
 
         <div class="q-pa-md" v-if="Usuario">
-          <q-btn flat label="Apartamentos" :to="{ path: '/user' }" />
+          <q-btn
+            flat
+            label="Apartamentos"
+            :to="{ path: '/controle/apartamentos' }"
+          />
           <q-btn flat label="Patrimônios" :to="{ path: '/user' }" />
           <q-btn flat label="Vistorias" :to="{ path: '/user' }" />
           <q-btn flat label="Alocar Alunos" :to="{ path: '/user' }" />

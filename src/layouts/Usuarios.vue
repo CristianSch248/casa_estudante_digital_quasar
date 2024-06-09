@@ -7,22 +7,31 @@
         </q-card-section>
         <q-card-section>
           <q-form @submit.prevent="handleSubmit" class="q-gutter-md">
-            <q-input v-model="usuario.nome" label="Nome" filled required />
+            <q-input
+              v-model="usuario.nome"
+              label="Nome"
+              filled
+              required
+              :disable="isEdit == false"
+            />
             <q-input
               v-model="usuario.email"
               label="Email"
               type="email"
               filled
               required
+              :disable="isEdit == false"
             />
             <q-input
+              v-if="isEdit === true"
               v-model="usuario.senha"
               label="Senha"
               type="password"
-              filledJ
-              disable="false"
+              filled
+              :disable="true"
             />
             <q-btn
+              v-if="isEdit === true"
               label="Alterar Senha"
               color="secondary"
               @click="showPasswordModal = true"
@@ -34,10 +43,28 @@
               type="tel"
               filled
               required
+              :disable="isEdit == false"
             />
             <div class="form-actions">
-              <q-btn type="submit" label="Salvar" color="positive" />
-              <q-btn label="Cancelar" color="negative" @click="handleCancel" />
+              <q-btn
+                type="submit"
+                label="Salvar"
+                color="positive"
+                @click="alterarUsuario()"
+                v-if="isEdit === true"
+              />
+              <q-btn
+                label="Cancelar"
+                color="negative"
+                @click="handleCancel"
+                v-if="isEdit === true"
+              />
+              <q-btn
+                label="Voltar"
+                color="secondary"
+                @click="handleCancel"
+                v-if="isEdit === false"
+              />
             </div>
           </q-form>
         </q-card-section>
@@ -64,7 +91,7 @@
     </div>
 
     <q-dialog v-model="showPasswordModal">
-      <q-card>
+      <q-card style="width: 700px; max-width: 80vw">
         <q-card-section>
           <div class="text-h6">Alterar Senha</div>
         </q-card-section>
@@ -78,7 +105,7 @@
           />
           <q-input
             v-model="ConfirmNewPassword"
-            label="Nova Senha"
+            label="Confirmar Nova Senha"
             type="password"
             filled
             required
@@ -95,13 +122,20 @@
 
 <script>
 import QRCode from "qrcode";
-import { fetchUserData, getUser } from "../services/UsuarioService";
+import {
+  fetchUserData,
+  getUser,
+  alterarSenhaUsuario,
+  alterarUsuario,
+} from "../services/UsuarioService";
 
 export default {
   name: "UserEdit",
   data() {
     return {
-      idUsuario: null,
+      myUserId: null,
+      otherUserid: null,
+
       usuario: {
         id: null,
         nome: null,
@@ -110,10 +144,13 @@ export default {
         tipo: null,
         telefone: null,
       },
+
       qrCodeUrl: null,
       showPasswordModal: false,
       newPassword: null,
       ConfirmNewPassword: null,
+
+      isEdit: false,
     };
   },
   watch: {
@@ -124,10 +161,17 @@ export default {
       deep: true,
     },
   },
+
   async created() {
-    this.idUsuario = this.$route.params.id;
-    if (this.idUsuario) await this.getUser();
-    else await this.getUserData();
+    this.otherUserid = this.$route.params.id ? this.$route.params.id : null;
+
+    if (this.otherUserid) {
+      await this.getUser();
+      this.isEdit = false;
+    } else {
+      await this.getUserData();
+      this.isEdit = true;
+    }
   },
   methods: {
     async getUserData() {
@@ -135,7 +179,7 @@ export default {
       this.usuario = userData;
     },
     async getUser() {
-      const userData = await getUser(this.idUsuario);
+      const userData = await getUser(this.otherUserid);
       this.usuario = userData;
     },
     async generateQRCode() {
@@ -148,16 +192,27 @@ export default {
     },
     closeModal() {
       this.showPasswordModal = false;
-      this.newPassword = "";
+      this.newPassword = null;
+      this.ConfirmNewPassword = null;
     },
-    updatePassword() {
+    async updatePassword() {
       if (this.newPassword !== this.ConfirmNewPassword) {
         alert("As senha não conferem");
+        return;
       }
+
+      await alterarSenhaUsuario(this.newPassword);
 
       this.closeModal();
     },
     handleSubmit() {},
+    async alterarUsuario() {
+      try {
+        await alterarUsuario(this.usuario);
+      } catch (error) {
+        console.log("novoUsuario ~ error:", error);
+      }
+    },
     handleCancel() {
       this.$router.push({ name: "ControleUsuarios" });
     },

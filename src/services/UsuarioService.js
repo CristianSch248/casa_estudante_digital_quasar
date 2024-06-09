@@ -90,7 +90,34 @@ async function novoUsuario(usuario) {
   }
 }
 
-async function alterarSenhaUsuario() {}
+async function alterarSenhaUsuario(senha) {
+  try {
+    const response = await api.put("usuario/alterar/senha", {
+      senha: senha,
+    });
+    return response;
+  } catch (error) {
+    console.log("alterarSenhaUsuario ~ error:", error);
+    throw error;
+  }
+}
+
+async function alterarUsuario(usuario) {
+  try {
+    const response = await api.put("usuario/editar", {
+      id: usuario.id,
+      nome: usuario.nome,
+      email: usuario.email,
+      senha: usuario.senha,
+      tipo: usuario.tipo,
+      telefone: usuario.telefone,
+    });
+    return response;
+  } catch (error) {
+    console.error("Erro ao buscar dados do usuário:", error);
+    throw error;
+  }
+}
 
 export {
   login,
@@ -101,4 +128,6 @@ export {
   desativarUser,
   getUser,
   novoUsuario,
+  alterarSenhaUsuario,
+  alterarUsuario,
 };

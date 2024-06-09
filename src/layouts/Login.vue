@@ -59,7 +59,7 @@ export default {
         const response = await login(credentials);
         if (response.auth === true) this.$router.push({ name: "AppDashboard" });
       } catch (error) {
-        console.log("🚀 ~ login ~ error:", error);
+        console.log("login ~ error:", error);
       }
     },
   },

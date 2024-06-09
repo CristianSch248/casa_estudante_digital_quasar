@@ -28,6 +28,16 @@ const routes = [
         name: "CadastrarUsuarios",
         component: () => import("src/layouts/CadastrarUsuarios.vue"),
       },
+      {
+        path: "/controle/apartamentos",
+        name: "ControleApartamentos",
+        component: () => import("src/layouts/ControleApartamentos.vue"),
+      },
+      {
+        path: "/apartamento/:id?",
+        name: "ApartamentoData",
+        component: () => import("src/layouts/Apartamentos.vue"),
+      },
     ],
   },
 

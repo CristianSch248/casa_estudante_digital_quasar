@@ -51,11 +51,8 @@
             label="Tipo"
             outlined
             required
-            :options="[
-              { label: 'Selecione', value: null },
-              { label: 'PRAE', value: 2 },
-              { label: 'Manutenção', value: 3 },
-            ]"
+            :options="tiposUsuario"
+            emit-value
           />
           <div class="form-actions">
             <q-btn label="Salvar" type="submit" outline color="positive" />
@@ -89,12 +86,18 @@ export default {
       },
 
       confirmSenha: null,
+      tiposUsuario: [
+        { label: "Selecione", value: null },
+        { label: "PRAE", value: 2 },
+        { label: "Manutenção", value: 3 },
+      ],
     };
   },
   methods: {
     async Salvar() {
-      if (this.usuario !== this.confirmSenha) {
+      if (this.usuario.senha !== this.confirmSenha) {
         console.log("As senhas não conferem");
+        return;
       }
 
       try {
@@ -119,6 +122,7 @@ export default {
         tipo: null,
         telefone: null,
       };
+      this.confirmSenha = null;
     },
   },
 };

@@ -3,13 +3,13 @@ import api from "../js/axiosConfig";
 async function novaVaga(Vaga) {
   try {
     const response = await api.post("/vaga/new", {
-      dt_entrada: Vaga.dt_saida,
-      id_aluno: Vaga.observacao,
-      id_apartamento: Vaga.ativo,
+      dt_entrada: Vaga.dt_entrada,
+      id_aluno: Vaga.id_aluno,
+      id_apartamento: Vaga.id_apartamento,
     });
     return response;
   } catch (error) {
-    console.error("Erro ao buscar dados do usuário:", error);
+    console.error("Erro ao cadastrar vaga:", error);
     throw error;
   }
 }
@@ -35,10 +35,4 @@ async function atualizarVaga(Vaga) {
   }
 }
 
-module.exports = {
-  novaVaga,
-  buscarVagas,
-  buscarVaga,
-  apagarVaga,
-  atualizarVaga,
-};
+export { novaVaga, buscarVagas, buscarVaga, apagarVaga, atualizarVaga };

@@ -2,7 +2,13 @@
   <q-layout view="hHh lpR fFf">
     <q-header>
       <q-toolbar>
-        <q-toolbar-title> Casa do Estudante Digital </q-toolbar-title>
+        <q-toolbar-title>
+          <q-btn @click="goToHome()">
+            <q-item-section>
+              <q-item-label>Casa do Estudante Digital</q-item-label>
+            </q-item-section>
+          </q-btn>
+        </q-toolbar-title>
 
         <div class="q-pa-md" v-if="Usuario">
           <q-item>
@@ -79,6 +85,9 @@ export default {
         default:
           return "";
       }
+    },
+    goToHome() {
+      this.$router.push({ name: "AppDashboard" });
     },
   },
 };

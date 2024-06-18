@@ -25,9 +25,13 @@
             label="Apartamentos"
             :to="{ path: '/controle/apartamentos' }"
           />
-          <q-btn flat label="Patrimônios" :to="{ path: '/user' }" />
+          <q-btn
+            flat
+            label="Patrimônios"
+            :to="{ path: '/controle/patrimonios' }"
+          />
           <q-btn flat label="Vistorias" :to="{ path: '/user' }" />
-          <q-btn flat label="Alocar Alunos" :to="{ path: '/user' }" />
+          <q-btn flat label="Alocar Alunos" :to="{ path: '/alocar/aluno' }" />
           <q-btn flat label="Usuários" :to="{ path: '/controle/usuarios' }" />
         </div>
 

@@ -38,6 +38,16 @@ const routes = [
         name: "ApartamentoData",
         component: () => import("src/layouts/Apartamentos.vue"),
       },
+      {
+        path: "/controle/patrimonios",
+        name: "ControlePatrimonios",
+        component: () => import("src/layouts/ControlePatrimonios.vue"),
+      },
+      {
+        path: "/alocar/aluno",
+        name: "AlocarAluno",
+        component: () => import("src/layouts/AlocarAluno.vue"),
+      },
     ],
   },
 

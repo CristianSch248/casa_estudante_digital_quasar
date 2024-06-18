@@ -28,6 +28,8 @@
           </div>
         </q-card-section>
       </q-card>
+      <!-- Fazer uma lista com os mordores do apê -->
+      <!-- Fazer uma lista com os patrimonios do apê -->
     </div>
   </q-page>
 </template>

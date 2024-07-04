@@ -48,6 +48,11 @@ const routes = [
         name: "AlocarAluno",
         component: () => import("src/layouts/AlocarAluno.vue"),
       },
+      {
+        path: "/controle/vistorias",
+        name: "ControleVistorias",
+        component: () => import("src/layouts/ControleVistorias.vue"),
+      },
     ],
   },
 

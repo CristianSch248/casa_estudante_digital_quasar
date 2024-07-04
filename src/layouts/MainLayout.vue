@@ -27,18 +27,65 @@
 
         <div class="q-pa-md" v-if="Usuario">
           <q-btn
+            v-if="Usuario.tipo === 2"
             flat
             label="Apartamentos"
             :to="{ path: '/controle/apartamentos' }"
           />
           <q-btn
+            v-if="Usuario.tipo === 2"
             flat
             label="Patrimônios"
             :to="{ path: '/controle/patrimonios' }"
           />
-          <q-btn flat label="Vistorias" :to="{ path: '/user' }" />
-          <q-btn flat label="Alocar Alunos" :to="{ path: '/alocar/aluno' }" />
-          <q-btn flat label="Usuários" :to="{ path: '/controle/usuarios' }" />
+          <q-btn
+            v-if="Usuario.tipo === 1"
+            flat
+            label="Meu apartamento"
+            :to="{ path: '/user' }"
+          />
+          <q-btn
+            v-if="Usuario.tipo === 1"
+            flat
+            label="Vistorias"
+            :to="{ path: '/controle/vistorias' }"
+          />
+          <q-btn
+            v-if="Usuario.tipo === 2"
+            flat
+            label="Buscar Vistorias"
+            :to="{ path: '/user' }"
+          />
+          <q-btn
+            v-if="Usuario.tipo === 1"
+            flat
+            label="Manutenções"
+            :to="{ path: '/user' }"
+          />
+          <q-btn
+            v-if="Usuario.tipo === 3"
+            flat
+            label="Buscar Manutenções"
+            :to="{ path: '/user' }"
+          />
+          <q-btn
+            v-if="Usuario.tipo === 1"
+            flat
+            label="Vagas"
+            :to="{ path: '/user' }"
+          />
+          <q-btn
+            v-if="Usuario.tipo === 2"
+            flat
+            label="Alocar Alunos"
+            :to="{ path: '/alocar/aluno' }"
+          />
+          <q-btn
+            v-if="Usuario.tipo === 2"
+            flat
+            label="Usuários"
+            :to="{ path: '/controle/usuarios' }"
+          />
         </div>
 
         <q-btn flat color="negative" label="Sair" :to="{ path: '/' }" />

@@ -53,6 +53,21 @@ const routes = [
         name: "ControleVistorias",
         component: () => import("src/layouts/ControleVistorias.vue"),
       },
+      {
+        path: "/controle/manutencoes",
+        name: "ControleManutencoes",
+        component: () => import("src/layouts/ControleManutencoes.vue"),
+      },
+      {
+        path: "/buscar/vagas",
+        name: "BuscarVagas",
+        component: () => import("src/layouts/Vagas.vue"),
+      },
+      {
+        path: "/apartamento/",
+        name: "MeuApartamento",
+        component: () => import("src/layouts/MeuApartamento.vue"),
+      },
     ],
   },
 

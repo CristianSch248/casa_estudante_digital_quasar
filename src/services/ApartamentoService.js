@@ -47,7 +47,6 @@ async function apagarApartamento(id) {
 }
 
 async function atualizarApartamento(apartamento) {
-  console.log("🚀 ~ atualizarApartamento ~ apartamento:", apartamento);
   try {
     const response = await api.put("/apartamento/update", {
       id: apartamento.id,
@@ -62,10 +61,32 @@ async function atualizarApartamento(apartamento) {
   }
 }
 
+async function buscarVagas() {
+  try {
+    const response = await api.get("/apartamento/vagas");
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao buscar dados dos Apartamentos:", error);
+    throw error;
+  }
+}
+
+async function MeuApartamento() {
+  try {
+    const response = await api.get("/apartamento/dados");
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao buscar dados dos Apartamentos:", error);
+    throw error;
+  }
+}
+
 export {
   novoApartamento,
   buscarApartamentos,
   buscarApartamento,
   apagarApartamento,
   atualizarApartamento,
+  buscarVagas,
+  MeuApartamento,
 };

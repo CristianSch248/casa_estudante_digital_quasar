@@ -42,7 +42,7 @@
             v-if="Usuario.tipo === 1"
             flat
             label="Meu apartamento"
-            :to="{ path: '/user' }"
+            :to="{ path: '/apartamento/' }"
           />
           <q-btn
             v-if="Usuario.tipo === 1"
@@ -54,25 +54,25 @@
             v-if="Usuario.tipo === 2"
             flat
             label="Buscar Vistorias"
-            :to="{ path: '/user' }"
+            :to="{ path: '/controle/vistorias' }"
           />
           <q-btn
             v-if="Usuario.tipo === 1"
             flat
             label="Manutenções"
-            :to="{ path: '/user' }"
+            :to="{ path: '/controle/manutencoes' }"
           />
           <q-btn
             v-if="Usuario.tipo === 3"
             flat
             label="Buscar Manutenções"
-            :to="{ path: '/user' }"
+            :to="{ path: '/controle/manutencoes' }"
           />
           <q-btn
             v-if="Usuario.tipo === 1"
             flat
             label="Vagas"
-            :to="{ path: '/user' }"
+            :to="{ path: '/buscar/vagas' }"
           />
           <q-btn
             v-if="Usuario.tipo === 2"
@@ -115,7 +115,6 @@ export default {
     async getUserData() {
       try {
         const userData = await fetchUserData();
-        console.log("User data fetched:", userData); // Adicionando log para verificar os dados
         this.Usuario = userData;
       } catch (error) {
         console.error("Failed to fetch user data:", error);

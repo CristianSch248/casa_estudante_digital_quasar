@@ -40,7 +40,9 @@
               label="Detalhes"
               outline
               color="positive"
-              @click="selectPatrimonio(props.row.id), (toolbar = true)"
+              @click="
+                selectPatrimonio(props.row.id), getAptos(), (toolbar = true)
+              "
             />
             <q-btn
               label="Apagar"
@@ -111,6 +113,31 @@
             <strong>Estado de conservação:</strong> {{ Patrimonio.estado }}
           </h6>
         </q-card-section>
+
+        <q-card-section>
+          <strong
+            >Selecione o apartamento para fazer a transferência do
+            patrimônio</strong
+          >
+          <q-table
+            :rows="Apartamentos"
+            :columns="ApartamentosColumns"
+            row-key="id"
+            flat
+            :loading="loading"
+          >
+            <template v-slot:body-cell-options="props">
+              <q-td :props="props">
+                <q-btn
+                  label="Selecionar"
+                  outline
+                  color="primary"
+                  @click="inserirPatrimonioApto(props.row.id)"
+                />
+              </q-td>
+            </template>
+          </q-table>
+        </q-card-section>
       </q-card>
     </q-dialog>
   </q-page>
@@ -123,6 +150,9 @@ import {
   apagarPatrimonio,
   atualizarPatrimonio,
 } from "../services/PatrimonioService";
+import { Notify } from "quasar";
+
+import { buscarApartamentos } from "../services/ApartamentoService";
 export default {
   name: "ControlePatrimonios",
   data() {
@@ -144,9 +174,23 @@ export default {
         id: null,
         descricao: null,
         estado: null,
+        id_apartamento: null,
       },
 
+      Apartamentos: [],
+      ApartamentosColumns: [
+        {
+          name: "numero",
+          label: "Numero",
+          align: "left",
+          field: "numero",
+        },
+        { name: "bloco", label: "Bloco", align: "left", field: "bloco" },
+        { name: "options", label: "Opção", align: "left", field: "options" },
+      ],
+
       showNewPatrimonioModal: false,
+      showAptosModal: false,
       toolbar: false,
     };
   },
@@ -166,9 +210,25 @@ export default {
       }
     },
 
+    async getAptos() {
+      this.loading = true;
+      try {
+        const aptos = await buscarApartamentos();
+        this.Apartamentos = aptos;
+      } catch (error) {
+        console.error(error);
+      } finally {
+        this.loading = false;
+      }
+    },
+
     async novoPatrimonio() {
       try {
-        await novoPatrimonio(this.Patrimonio);
+        const response = await novoPatrimonio(this.Patrimonio);
+        Notify.create({
+          type: "positive",
+          message: response.data,
+        });
         await this.getPatrimonios();
         this.closeModal();
       } catch (error) {
@@ -180,11 +240,18 @@ export default {
 
     async editarPatrimonio() {
       try {
-        await atualizarPatrimonio(this.Patrimonio);
+        const response = await atualizarPatrimonio(this.Patrimonio);
+        Notify.create({
+          type: "positive",
+          message: response.data,
+        });
         await this.getPatrimonios();
         this.closeModal();
       } catch (error) {
-        console.error(error);
+        Notify.create({
+          type: "negative",
+          message: error.response.data,
+        });
       } finally {
         this.loading = false;
       }
@@ -192,6 +259,7 @@ export default {
 
     closeModal() {
       this.showNewPatrimonioModal = false;
+      this.showAptosModal = false;
       this.deleteInfos();
     },
 
@@ -213,10 +281,39 @@ export default {
 
     async apagarPatrimonio(id) {
       try {
-        await apagarPatrimonio(id);
+        const response = await apagarPatrimonio(id);
+        Notify.create({
+          type: "positive",
+          message: response,
+        });
         await this.getPatrimonios();
       } catch (error) {
-        console.error(error);
+        Notify.create({
+          type: "negative",
+          message: error.response.data,
+        });
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    async inserirPatrimonioApto(id) {
+      let patrimonio = this.Patrimonio;
+      patrimonio.id_apartamento = id;
+
+      try {
+        const response = await atualizarPatrimonio(this.Patrimonio);
+        Notify.create({
+          type: "positive",
+          message: response.data,
+        });
+        await this.getPatrimonios();
+        this.closeModal();
+      } catch (error) {
+        Notify.create({
+          type: "negative",
+          message: error.response.data,
+        });
       } finally {
         this.loading = false;
       }

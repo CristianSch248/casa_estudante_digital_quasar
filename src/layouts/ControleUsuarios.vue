@@ -61,6 +61,7 @@ import {
   ativarUser,
   desativarUser,
 } from "../services/UsuarioService";
+import { Notify } from "quasar";
 
 export default {
   name: "ControleUsuarios",
@@ -81,7 +82,7 @@ export default {
     async getUsers() {
       this.loading = true;
       try {
-        const users = await getAllUsers({ tipo: 1 });
+        const users = await getAllUsers();
         this.usuarios = users;
       } catch (error) {
         console.error(error);
@@ -97,18 +98,32 @@ export default {
     },
     async ativarUsuario(id) {
       try {
-        await ativarUser(id);
+        const response = await ativarUser(id);
+        Notify.create({
+          type: "positive",
+          message: response,
+        });
         this.getUsers();
       } catch (error) {
-        console.error(error);
+        Notify.create({
+          type: "negative",
+          message: error.response.data,
+        });
       }
     },
     async desativarUsuario(id) {
       try {
-        await desativarUser(id);
+        const response = await desativarUser(id);
+        Notify.create({
+          type: "positive",
+          message: response,
+        });
         this.getUsers();
       } catch (error) {
-        console.error(error);
+        Notify.create({
+          type: "negative",
+          message: error.response.data,
+        });
       }
     },
   },

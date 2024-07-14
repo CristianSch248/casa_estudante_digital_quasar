@@ -40,9 +40,19 @@ async function fetchUserData() {
   }
 }
 
-async function getAllUsers(params = {}) {
+async function getAllUsers() {
   try {
-    const response = await api.get("/usuario/listarportipo", { params });
+    const response = await api.get("/usuario/listarportipo");
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao buscar dados do usuário:", error);
+    throw error;
+  }
+}
+
+async function getAllAlunos() {
+  try {
+    const response = await api.get("/usuario/alunos");
     return response.data;
   } catch (error) {
     console.error("Erro ao buscar dados do usuário:", error);
@@ -124,6 +134,7 @@ export {
   logout,
   fetchUserData,
   getAllUsers,
+  getAllAlunos,
   ativarUser,
   desativarUser,
   getUser,

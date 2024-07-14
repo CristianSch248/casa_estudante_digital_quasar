@@ -125,8 +125,9 @@
 
 <script>
 import { buscarApartamentos } from "../services/ApartamentoService";
-import { getAllUsers } from "../services/UsuarioService";
+import { getAllAlunos } from "../services/UsuarioService";
 import { novaVaga } from "../services/VagasService";
+import { Notify } from "quasar";
 
 export default {
   name: "AlocarAluno",
@@ -172,7 +173,7 @@ export default {
     async getUsers() {
       this.loading = true;
       try {
-        const users = await getAllUsers({ tipo: 1 });
+        const users = await getAllAlunos();
         this.usuarios = users;
       } catch (error) {
         console.error(error);
@@ -204,10 +205,19 @@ export default {
 
       this.loading = true;
       try {
-        await novaVaga(this.Vaga);
+        const response = await novaVaga(this.Vaga);
+        Notify.create({
+          type: "positive",
+          message: response.data,
+        });
+
         this.limparInfos();
+        this.getUsers();
       } catch (error) {
-        console.error(error);
+        Notify.create({
+          type: "negative",
+          message: error.response.data,
+        });
       } finally {
         this.loading = false;
       }

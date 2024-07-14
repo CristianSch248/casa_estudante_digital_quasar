@@ -72,6 +72,7 @@
 
 <script>
 import { novoUsuario } from "../services/UsuarioService";
+import { Notify } from "quasar";
 
 export default {
   name: "CadastrarUsuarios",
@@ -106,8 +107,15 @@ export default {
           this.$router.push({ path: "/controle/usuarios" });
           this.resetUsuario();
         }
+        Notify.create({
+          type: "positive",
+          message: response.data,
+        });
       } catch (error) {
-        console.log("novoUsuario ~ error:", error);
+        Notify.create({
+          type: "negative",
+          message: error.response.data,
+        });
       }
     },
     Cancelar() {

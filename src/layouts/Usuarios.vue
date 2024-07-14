@@ -128,6 +128,7 @@ import {
   alterarSenhaUsuario,
   alterarUsuario,
 } from "../services/UsuarioService";
+import { Notify } from "quasar";
 
 export default {
   name: "UserEdit",
@@ -201,15 +202,35 @@ export default {
         return;
       }
 
-      await alterarSenhaUsuario(this.newPassword);
-
-      this.closeModal();
+      try {
+        const response = await alterarSenhaUsuario(this.newPassword);
+        Notify.create({
+          type: "positive",
+          message: response.data,
+        });
+      } catch (error) {
+        Notify.create({
+          type: "negative",
+          message: error.response.data,
+        });
+      } finally {
+        this.loading = false;
+        this.closeModal();
+      }
     },
     handleSubmit() {},
     async alterarUsuario() {
       try {
-        await alterarUsuario(this.usuario);
+        const response = await alterarUsuario(this.usuario);
+        Notify.create({
+          type: "positive",
+          message: response.data,
+        });
       } catch (error) {
+        Notify.create({
+          type: "negative",
+          message: error.response.data,
+        });
         console.log("novoUsuario ~ error:", error);
       }
     },

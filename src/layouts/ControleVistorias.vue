@@ -169,6 +169,7 @@ import {
   apagarVistoria,
   atualizarVistoria,
 } from "../services/VistoriaService";
+import { Notify } from "quasar";
 
 export default {
   name: "ControleVistorias",
@@ -229,11 +230,18 @@ export default {
     async novaVistoria() {
       this.loading = true;
       try {
-        await novaVistoria(this.Vistoria);
+        const response = await novaVistoria(this.Vistoria);
+        Notify.create({
+          type: "positive",
+          message: response.data,
+        });
         await this.getVistorias();
         this.closeModal();
       } catch (error) {
-        console.error(error);
+        Notify.create({
+          type: "negative",
+          message: error.response.data,
+        });
       } finally {
         this.loading = false;
       }
@@ -241,11 +249,19 @@ export default {
     async editarVistoria() {
       this.loading = true;
       try {
-        await atualizarVistoria(this.Vistoria);
+        const response = await atualizarVistoria(this.Vistoria);
+        console.log("🚀 ~ editarVistoria ~ response:", response);
+        Notify.create({
+          type: "positive",
+          message: response,
+        });
         await this.getVistorias();
         this.closeModal();
       } catch (error) {
-        console.error(error);
+        Notify.create({
+          type: "negative",
+          message: error.response.data,
+        });
       } finally {
         this.loading = false;
       }
@@ -271,10 +287,17 @@ export default {
     async apagarVistoria(id) {
       this.loading = true;
       try {
-        await apagarVistoria(id);
+        const response = await apagarVistoria(id);
+        Notify.create({
+          type: "positive",
+          message: response,
+        });
         await this.getVistorias();
       } catch (error) {
-        console.error(error);
+        Notify.create({
+          type: "negative",
+          message: error.response.data,
+        });
       } finally {
         this.loading = false;
       }

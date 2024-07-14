@@ -113,12 +113,12 @@ module.exports = configure(function (/* ctx */) {
         "QTh",
         "QTr",
         "QTd",
-        "QSelect",
+        "QSelect"
       ],
       directives: [],
 
       // Quasar plugins
-      plugins: [],
+      plugins: ["Notify"],
     },
 
     // animations: 'all', // --- includes all animations

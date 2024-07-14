@@ -108,6 +108,7 @@ import {
   apagarApartamento,
   atualizarApartamento,
 } from "../services/ApartamentoService";
+import { Notify } from "quasar";
 
 export default {
   name: "ControleApartamentos",
@@ -162,11 +163,18 @@ export default {
 
     async novoApto() {
       try {
-        await novoApartamento(this.Apartamento);
+        const response = await novoApartamento(this.Apartamento);
+        Notify.create({
+          type: "positive",
+          message: response.data,
+        });
         await this.getAptos();
         this.closeModal();
       } catch (error) {
-        console.error(error);
+        Notify.create({
+          type: "negative",
+          message: error.response.data,
+        });
       } finally {
         this.loading = false;
       }
@@ -174,10 +182,18 @@ export default {
 
     async editarApto() {
       try {
-        await atualizarApartamento(this.Apartamento);
+        const response = await atualizarApartamento(this.Apartamento);
+        console.log("🚀 ~ editarApto ~ response:", response);
+        Notify.create({
+          type: "positive",
+          message: response.data,
+        });
         await this.getAptos();
       } catch (error) {
-        console.error(error);
+        Notify.create({
+          type: "negative",
+          message: error.response.data,
+        });
       } finally {
         this.loading = false;
       }
@@ -207,10 +223,17 @@ export default {
 
     async apagarApto(id) {
       try {
-        await apagarApartamento(id);
+        const response = await apagarApartamento(id);
+        Notify.create({
+          type: "positive",
+          message: response,
+        });
         await this.getAptos();
       } catch (error) {
-        console.error(error);
+        Notify.create({
+          type: "negative",
+          message: error.response.data,
+        });
       } finally {
         this.loading = false;
       }

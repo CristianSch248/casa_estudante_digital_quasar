@@ -49,8 +49,11 @@ async function atualizarPatrimonio(patrimonio) {
   try {
     const response = await api.put("/patrimonio/update", {
       id: patrimonio.id,
-      descricao: patrimonio.descricao,
-      estado: patrimonio.estado,
+      descricao: patrimonio.descricao ? patrimonio.descricao : null,
+      estado: patrimonio.estado ? patrimonio.estado : null,
+      id_apartamento: patrimonio.id_apartamento
+        ? patrimonio.id_apartamento
+        : null,
     });
     return response;
   } catch (error) {

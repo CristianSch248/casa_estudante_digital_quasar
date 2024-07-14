@@ -51,7 +51,7 @@ async function apagarVistoria(id) {
 async function atualizarVistoria(vistoria) {
   try {
     const response = await api.put("/vistoria/update", {
-      params: { id: vistoria.id },
+      id: vistoria.id,
       dt_vistoria: vistoria.dt_vistoria,
       hora_vistoria: vistoria.hora_vistoria,
     });

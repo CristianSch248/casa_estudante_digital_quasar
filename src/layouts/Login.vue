@@ -39,6 +39,7 @@
 
 <script>
 import { login } from "../services/UsuarioService";
+import { Notify } from "quasar";
 
 export default {
   name: "LoginLayout",
@@ -57,8 +58,24 @@ export default {
 
       try {
         const response = await login(credentials);
-        if (response.auth === true) this.$router.push({ name: "AppDashboard" });
+        if (response.auth === true) {
+          Notify.create({
+            type: "positive",
+            message: "Bem-vindo de volta!",
+          });
+          this.$router.push({ name: "AppDashboard" });
+        } else {
+          Notify.create({
+            type: "negative",
+            message: "Falha no login. Verifique suas credenciais.",
+          });
+        }
       } catch (error) {
+        console.log("🚀 ~ handleLogin ~ error:", error);
+        Notify.create({
+          type: "negative",
+          message: error.response.data,
+        });
         console.log("login ~ error:", error);
       }
     },

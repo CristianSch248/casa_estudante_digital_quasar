@@ -180,6 +180,7 @@ import {
   apagarManutencao,
   atualizarManutencao,
 } from "../services/ManutencoesService";
+import { Notify } from "quasar";
 
 export default {
   name: "ControleManutencoes",
@@ -247,11 +248,18 @@ export default {
     async novaManutencao() {
       this.loading = true;
       try {
-        await novaManutencao(this.Manutencao);
+        const response = await novaManutencao(this.Manutencao);
+        Notify.create({
+          type: "positive",
+          message: response.data,
+        });
         await this.getManutencoes();
         this.closeModal();
       } catch (error) {
-        console.error(error);
+        Notify.create({
+          type: "negative",
+          message: error.response.data,
+        });
       } finally {
         this.loading = false;
       }
@@ -259,11 +267,18 @@ export default {
     async atualizarManutencao() {
       this.loading = true;
       try {
-        await atualizarManutencao(this.Manutencao);
+        const response = await atualizarManutencao(this.Manutencao);
+        Notify.create({
+          type: "positive",
+          message: response,
+        });
         await this.getManutencoes();
         this.closeModal();
       } catch (error) {
-        console.error(error);
+        Notify.create({
+          type: "negative",
+          message: error.response.data,
+        });
       } finally {
         this.loading = false;
       }
@@ -290,10 +305,17 @@ export default {
     async apagarManutencao(id) {
       this.loading = true;
       try {
-        await apagarManutencao(id);
+        const response = await apagarManutencao(id);
+        Notify.create({
+          type: "positive",
+          message: response,
+        });
         await this.getManutencoes();
       } catch (error) {
-        console.error(error);
+        Notify.create({
+          type: "negative",
+          message: error.response.data,
+        });
       } finally {
         this.loading = false;
       }

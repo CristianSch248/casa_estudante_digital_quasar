@@ -4,7 +4,7 @@
       <q-card-section>
         <div class="q-gutter-md row align-items-center">
           <div class="col text-start">
-            <div class="text-h6">QUadro de Vagas CEU 2</div>
+            <div class="text-h6">Quadro de Vagas CEU 2</div>
           </div>
         </div>
       </q-card-section>

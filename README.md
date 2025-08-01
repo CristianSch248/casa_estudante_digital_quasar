@@ -1,41 +1,34 @@
-# CED app (casa-estudante-digital-quasar)
+# 🏠 Casa do Estudante Digital - Frontend
 
-UFSM - Curso Sistemas para Internet - Projeto Integrador - Casa Estudante Digital
+## 📌 Sobre o Projeto
+O **Casa do Estudante Digital** é um sistema para gerenciar a Casa do Estudante da UFSM, permitindo controle de apartamentos, moradores, patrimônio, vistorias e manutenções.  
 
-## Install the dependencies
-```bash
-yarn
-# or
-npm install
-```
+Este repositório contém **apenas o frontend** do sistema, desenvolvido com **Vue.js** e **Quasar Framework**, que consome a API REST do backend.
 
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
-```bash
-quasar dev
-```
+---
 
+## 🎯 Funcionalidades do Frontend
+- Interface responsiva e intuitiva para diferentes perfis de usuário (PRAE, Aluno, Manutenção).
+- Login e autenticação com **JWT**.
+- Gestão de usuários, apartamentos, patrimônios, manutenções e vistorias.
+- Visualização de vagas e histórico de serviços.
+- Geração de QR Codes (quando aplicável).
+- Navegação por rotas utilizando **Vue Router**.
+- Gerenciamento de estado global com **Pinia**.
 
-### Lint the files
-```bash
-yarn lint
-# or
-npm run lint
-```
+---
 
+## 🛠 Tecnologias Utilizadas
+- **Linguagem:** JavaScript (ES6+)
+- **Framework:** [Vue.js 3](https://vuejs.org/)
+- **UI Framework:** [Quasar](https://quasar.dev/)
+- **Gerenciamento de Estado:** [Pinia](https://pinia.vuejs.org/)
+- **Roteamento:** [Vue Router](https://router.vuejs.org/)
+- **HTTP Client:** [Axios](https://axios-http.com/)
+- **Geração de QR Codes:** [qrcode](https://www.npmjs.com/package/qrcode)
+- **Estilização:** SCSS, Quasar CSS Utilities
+- **Ferramentas:** ESLint, Prettier, Vite
 
-### Format the files
-```bash
-yarn format
-# or
-npm run format
-```
+---
 
-
-
-### Build the app for production
-```bash
-quasar build
-```
-
-### Customize the configuration
-See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js).
+## 📂 Estrutura de Pastas (Sugestão)
